@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css_files %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css'>
+<link rel="stylesheet" type="text/css" href="{% static 'projects_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+<link rel="stylesheet" href="{% static 'dist/mc-calendar.min.css' %}" />
+{% endblock %}
+{% block title %} Projects {% endblock %}
+{% block content %}
+ <div class="body-div"> 
+    <div class="window giderWindow">
+      <div class="container">
+         <h3 id="gider-modal" class="modal-kapat" >X</h3>
+         <div class="title">Ödeme Ekleme</div>
+         <form action="{% url 'projects' %}" method="post">
+            {% csrf_token %}
+            <div class="user-details">
+               <div class="input-box" name="ProjectName_Expenses">
+                  <span class="details">Proje Adı</span>
+                  {{ expenses_form.ProjectName_Expenses }}
+               </div>
+               <div class="input-box" name="CompanyName_Paying_Expenses">
+                  <span class="details">Ödeme Yapılan Firma<button type="button" id="paying-firma-add-btn" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                  {{ expenses_form.CompanyName_Paying_Expenses }}
+               </div>
+               <div class="input-box" name="CompanyName_FromPaymentMade_Expenses"> 
+                  <span class="details">Ödeme Yapan Firma</span>
+                  {{ expenses_form.CompanyName_FromPaymentMade_Expenses }}
+               </div>
+               <div class="input-box">
+                  <span class="details">Gider Detayı</span>
+                  {{ expenses_form.ExpensDetails_Expenses }}
+               </div>
+               <div class="input-box">
+                  <span class="details">Tutar (₺)</span>
+                  {{ expenses_form.Amount_Expenses }}
+               </div>
+               <div class="input-box">
+                  <span class="details">Dolar Kuru (₺)</span>
+                  {{ expenses_form.Dollar_Rate_Expenses }}
+               </div>
+               <div class="input-box">
+                  <span class="details">Banka</span>
+                  {{ expenses_form.Bank_Expenses }}
+               </div>
+              <div class="input-box">
+                  <span class="details">Tarih</span>
+                  <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" id="tarih5" type="date" name="Date_Expenses" placeholder="Tarih Seçiniz" />
+               </div>
+               <div class="input-box">
+                  <span class="details">Kur Saati</span>
+                  <select name="" id="">
+                     <option value="">3'ten Önce</option>
+                     <option value="">3'ten Sonra</option>
+                  </select>
+               </div>
+            </div>
+            <div class="button">
+               <input type="submit" value="Kaydet" />
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="window isWindow">
+      <div class="container">
+         <h3 id="is-modal" class="modal-kapat" >X</h3>
+         <div class="title">Yapılan İş Ekleme</div>
+         <form action="{% url 'projects' %}" method="post">
+            {% csrf_token %}
+            <div class="user-details">
+              <div class="input-box" name="ProjectName_JobHistory">
+                  <span class="details">Proje Adı</span>
+                  {{ jobhistory_form.ProjectName_JobHistory }}
+               </div>
+               <div class="input-box" name="CompanyName_FromJobMade_JobHistory"> 
+                  <span class="details">İşi Yapan Firma</span>
+                  {{ jobhistory_form.CompanyName_FromJobMade_JobHistory }}
+               </div>
+               <div class="input-box" name="CompanyName_Job_JobHistory">
+                  <span class="details">İş Yapılan Firma<button type="button" id="paying-firma-add-btn-2" class="paying-firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                  {{ jobhistory_form.CompanyName_Job_JobHistory }}
+               </div>
+               <div class="input-box" name="ExpensDetails_JobHistory">
+                  <span class="details">Cinsi</span>
+                  {{ jobhistory_form.ExpensDetails_JobHistory }}
+               </div>
+               <div class="input-box" name="Amount_JobHistory">
+                  <span class="details">Tutar (₺)</span>
+                  {{ jobhistory_form.Amount_JobHistory }}
+               </div>
+               <div class="input-box" name="Dollar_Rate_JobHistory">
+                  <span class="details">Dolar Kuru (₺)</span>
+                  {{ jobhistory_form.Dollar_Rate_JobHistory }}
+               </div>
+               <div class="input-box">
+                  <span class="details">Tarih</span>
+                  <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" id="tarih4" type="date" name="Date_JobHistory" placeholder="Tarih Seçiniz" />
+               </div>
+               <div class="input-box" name="Invoice_No_JobHistory">
+                  <span class="details">Fatura Numarası</span>
+                  {{ jobhistory_form.Invoice_No_JobHistory }}
+               </div>
+               <div class="input-box">
+                  <span class="details">Kur Saati</span>
+                  <select name="" id="">
+                     <option value="">3'ten Önce</option>
+                     <option value="">3'ten Sonra</option>
+                  </select>
+               </div>
+            </div>
+            <div class="button">
+               <input type="submit" value="Kaydet" />
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="window gelirWindow">
+      <div class="container">
+         <h3 id="gelir-modal" class="modal-kapat">X</h3>
+         <div class="title">Gelir Ekleme</div>
+         <form action="{% url 'projects' %}" method="post">
+            {% csrf_token %}
+               <div class="user-details">
+                  <div class="input-box" name="ProjectName_Incomes">
+                      <span class="details">Proje Adı</span>
+                      {{ incomes_form.ProjectName_Incomes }}
+                  </div>
+                  <div class="input-box" name="CompanyName_ReceivePayment_Incomes">
+                      <span class="details">Alıcı Firma</span>
+                      {{ incomes_form.CompanyName_ReceivePayment_Incomes }}
+                  </div>
+                  <div class="input-box" name="Amount_Incomes">
+                      <span class="details">Alınan Miktar (₺)</span>
+                      {{ incomes_form.Amount_Incomes }}
+                  </div>
+                  <div class="input-box" name="Dollar_Rate_Incomes">
+                      <span class="details">Dolar Kuru (₺)</span>
+                      {{ incomes_form.Dollar_Rate_Incomes }}
+                  </div>
+                
+                  <div class="input-box" name="PaymentType_Incomes">
+                    <span class="details">Ödeme Türü<button type="button" id="last-date-add-btn" class="last-date-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                    {{ incomes_form.PaymentType_Incomes }}
+                  </div>
+                  <div class="input-box" id="chek_date_box">
+                    <span class="details">Tarih </span>
+                    <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="ChekDate_Incomes" id="tarih30">
+                  </div>
+                  <div style="display: none;" class="input-box chek-last-date-box" >
+                     <span class="details">Çek Son Kullanma Tarihi </span>
+                     <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" class="coc-input" type="date" name="LastChekDate_Incomes" id="tarihh">
+                  </div>   
+                  <div class="input-box">
+                     <span class="details">Kur Saati</span>
+                     <select name="" id="">
+                        <option value="">3'ten Önce</option>
+                        <option value="">3'ten Sonra</option>
+                     </select>
+                  </div> 
+               </div>      
+                  <div class="button">  
+                     <input type="submit" value="Kaydet">
+                  </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="window projeBaslatWindow">
+      <div class="container projeBaslatContainer">
+        <h3 id="project-modal" class="modal-kapat">X</h3>
+        <div class="title">Proje Ekleme</div>
+        <form action="{% url 'projects' %}" method="post">
+                {% csrf_token %}
+          <div class="user-details">
+                      <div class="input-box">
+                          <span class="details">Firma Adı<button type="button" id="firma-add-btn" class="firma-add-btn"><i class="fa-solid fa-plus"></i></button></span>
+                          {{ form.CompanyName }}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">Proje Adı</span>
+                          {{ form.ProjectName }}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">Proje Kodu</span>
+                          {{ form.ProjectCode }}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">İşi Üstlenen Firma</span>
+                          {{ form.CompanyUndertakingWork }}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">Konum</span>
+                          {{ form.Location }}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">İş Bedeli - KDV Hariç (₺)</span>
+                          {{ form.Cost_NotIncludingKDV }}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">AC Güç (kWe)</span>
+                          {{form.AC_Power}}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">DC Güç (kWp)</span>
+                          {{form.DC_Power}}
+                      </div>
+                      <div class="input-box">
+                          <span class="details">Hesaplanan Maliyet - KDV Hariç (₺)</span>
+                          {{form.CalculatedCost_NotIncludingKDV}}
+                      </div>
+                    
+                    <div class="input-box">
+                      <span class="details"> işin Başlama Tarihi</span>
+                      <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat; "id="tarih" type="date" name="StartDate" placeholder="Tarih Seçiniz" />
+                    </div>
+                    <div class="input-box">
+                      <span class="details">Bitirme Tarihi</span>
+                      <input style = "background:url('{% static 'images/calendar.gif' %}')99% 50% no-repeat;" id="tarih2" type="date" name="FinishDate" placeholder="Tarih Seçiniz" />
+                    </div>
+                    <div class="input-box">
+                      <span class="details">KDV Oranı (%)</span>
+                      {{form.KDV_Rate}}
+                    </div>
+                    <div class="input-box">
+                      <span class="details">Arazi/Çatı</span>
+                      {{form.Terrain_Roof}}
+                    </div>
+                    <div class="input-box">
+                      <span class="details">Teşvikli (Evet/Hayır)</span>           
+                      {{form.Incentive}}
+                    </div>
+          </div>
+            <div class="button">
+            <input id="project-create-btn" type="submit" value="Oluştur" />
+            </div>
+          
+        </form>
+      </div>
+    </div>
+  
+   <div class="window payingFirmaAddWindow">
+      <div class="container">
+            <h3 id="payingFirmaAdd-modal" class="modal-kapat">X</h3>
+            <div class="title">Firma Ekle</div>
+         <form action="{% url 'projects' %}" method="post">
+               {% csrf_token %}
+               <div class="user-details"> 
+                  <div class="input-box" name="CompanyName">
+                    <span class="details">Firma Adı</span>
+                    {{ supplier_form.CompanyName_Supplier }}
+                  </div>                        
+            </div>
+               <div class="button">
+                     <input type="submit" value="Kaydet">
+               </div>
+         </form>
+      </div>
+   </div>
+    
+    {% include 'partials/_left_nav_bar.html' %}
+    <div class="right-menu">
+      <div class="top-menu">
+          <div class="menu-icon">
+          </div>
+        <div class="content">
+          <button class="button1">Sırala</button>
+          <button class="button1">Filitrele</button>
+          <div class="search">
+              <div class="icon"></div>
+              <div class="input">
+                <input id="mysearch" type="text" placeholder="Ara">
+            </div>
+            <span class="clear" onclick="document.getElementById('mysearch').value = ''"></span>
+         </div>
+      </div>
+      <div class="fonction-butons">
+         <button class="button2" id="gelir-ac">Gelir</button>
+         <button class="button2" id="gider-ac">Yapılan Ödeme</button>
+         <button class="button2" id="is-ac">Yapılan İş</button>
+         <button class="button-project-start" id="project-ac">Proje Başlat</button>
+      </div>
+   </div>
+   <div class="lists">
+      <div class="line"></div>
+      <table id="table" class="table table-sortable">
+         <thead>
+            <th scope="col">Proje Adı</th>
+            <th scope="col">Konum</th>
+            <th scope="col">Güç</th>
+            <th scope="col">İş Bedeli</th>
+            <th scope="col">Arazi/Çatı</th>
+            <th scope="col">Tarih</th>
+            <th scope="col">Durum</th>
+         </thead>
+         <tbody>
+            {% for x in project %}
+            {% include 'partials/_table-row.html' %}
+            {% endfor %}
+         </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{% block js_files %} 
+<script src="{% static 'project.js' %}"></script> 
+<script src="{% static 'dist/mc-calendar.min.js' %}"></script> 
+{% endblock %}
+{% endblock %}

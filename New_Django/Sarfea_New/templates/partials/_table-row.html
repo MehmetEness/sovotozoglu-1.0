@@ -1,0 +1,11 @@
+{% load static %}
+
+<tr>
+    <td><a href="{% url 'project_details' project_name=x.ProjectName %}">{{ x.ProjectName }}</a></td>
+    <td>{{ x.Location }}</td>
+    <td>{{ x.AC_Power }} kW</td>
+    <td>{{ x.CalculatedCost_NotIncludingKDV }} ₺</td>
+    <td>{{x.Terrain_Roof}}</td>
+    <td>{{ x.StartDate }}</td>
+    <td>{{ x.Situation }}</td>
+</tr>

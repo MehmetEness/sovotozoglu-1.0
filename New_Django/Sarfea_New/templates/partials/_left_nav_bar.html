@@ -1,0 +1,47 @@
+
+{% load static %}
+
+{% block css_files %} 
+{% endblock %}
+
+<div id="nav-bar">         
+    <div id="nav-header"><a id="nav-title" target="_blank">SOVO-TOZOGLU</a>
+        <hr/>
+    </div>
+    <div id="nav-content">
+       <!-- JavaScript içinde URL'leri kullanma -->
+       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-home"></i><span><a href="{% url 'home' %}">Ana Sayfa</a></span></div>
+       <div class="nav-button" onclick="window.location.href = projectsUrl;"><i class="fas fa-project-diagram"></i></i><span><a href="{% url 'projects' %}">Projeler</a></span></div>
+       <hr/>
+       <div class="nav-button" onclick="window.location.href = clientUrl;"><i class="fas fa-users"></i><a href="{% url 'client' %}"><span>Müşteri</span></a></div>
+       <div class="nav-button" onclick="window.location.href = supplierUrl;"><i class="fas fa-truck"></i><a href="{% url 'supplier' %}"><span>Tedarikçi</span></a></div>
+
+       <hr/>
+       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-wallet"></i><span>Satış Teklif</span></div>            
+       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-box"></i><span>Stok</span></div>
+       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-wrench"></i><span>İşletme Bakım</span></div>
+       <div class="nav-button" onclick="window.location.href = homeUrl;"><i class="fas fa-chart-line"></i><span>Raporlama</span></div>
+        <div id="nav-content-highlight"></div>
+    </div>
+    <input id="nav-footer-toggle" type="checkbox"/>
+    <div id="nav-footer">
+        <div id="nav-footer-heading">
+          <div id="nav-footer-avatar"><i class="fas fa-user"></i></div>
+          <div id="nav-footer-titlebox"><span id="nav-footer-title" target="_blank">Yönetici</span><span id="nav-footer-subtitle">Admin</span></div>
+          <label for="nav-footer-toggle"><i class="fas fa-caret-up"></i></label>
+        </div>
+        <div id="nav-footer-content">
+        </div>
+    </div>
+</div>
+
+{% block js_files %} 
+
+<script>
+    var homeUrl = "{% url 'home' %}";
+    var projectsUrl = "{% url 'projects' %}";
+    var clientUrl = "{% url 'client' %}";
+    var supplierUrl = "{% url 'supplier' %}";
+</script>
+
+{% endblock %}
